@@ -133,6 +133,12 @@ class Cell:
     def toggle(self):
         self.visible = not self.visible
         return self.visible
+    
+    def reveal(self):
+        self.visible = True
+    
+    def hide(self):
+        self.visible = False
 
 
 if __name__ == '__main__':

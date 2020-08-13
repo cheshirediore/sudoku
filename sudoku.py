@@ -44,27 +44,28 @@ class Board:
         coordinate is a tuple (row, column). (0, 0) defines the top left block
         """
         # First Row
-        if block_num == 1:
+        if block_num == 0:
             coordinate = (0, 0)
-        elif block_num == 2:
+        elif block_num == 1:
             coordinate = (3, 0)
-        elif block_num == 3:
+        elif block_num == 2:
             coordinate = (6, 0)
         # Second Row
-        elif block_num == 4:
+        elif block_num == 3:
             coordinate = (0, 3)
-        elif block_num == 5:
+        elif block_num == 4:
             coordinate = (3, 3)
-        elif block_num == 6:
+        elif block_num == 5:
             coordinate = (6, 3)
         # Third Row
-        elif block_num == 7:
+        elif block_num == 6:
             coordinate = (0, 6)
-        elif block_num == 8:
+        elif block_num == 7:
             coordinate = (3, 6)
-        elif block_num == 9:
+        elif block_num == 8:
             coordinate = (6, 6)
         else:
+            print(block_num)
             return None
         block = []
         for y in range(coordinate[0], coordinate[0]+3):
@@ -82,27 +83,27 @@ class Board:
         self.board[y][x] = value
 
     def validate(self):
-        valid = True
         # Validate Rows
         for i in range(9):
-            print('Row: %s' % (self.get_row(i)))
+            # print('Row: %s' % (self.get_row(i)))
             if not self.subvalidate(self.get_row(i)):
                 return False
         # Validate Columns
         for i in range(9):
-            print('Column: %s' % (self.get_column(i)))
+            # print('Column: %s' % (self.get_column(i)))
             if not self.subvalidate(self.get_column(i)):
                 return False
         # Validate Blocks
         for i in range(9):
-            print('Block: %s' % (self.get_block(i)))
+            # print('Block: %s' % (self.get_block(i)))
             if not self.subvalidate(self.get_block(i)):
                 return False
+        return True
 
     def subvalidate(self, section):
         values = [cell.get_value() for cell in section]
-        print(set(values))
-        print({'1','2','3','4','5','6','7','8','9'})
+        # print(set(values))
+        # print({'1','2','3','4','5','6','7','8','9'})
         return set(values) == {'1','2','3','4','5','6','7','8','9'}
 
 class Cell:
@@ -121,8 +122,10 @@ class Cell:
             return ' '
 
     def __repr__(self):
-        return str(self.value)[0]
-
+        if self.value:
+            return str(self.value)[0]
+        else:
+            return ' '
 
     def get_value(self):
         return str(self.value)
@@ -141,14 +144,12 @@ if __name__ == '__main__':
         ,[Cell(value='9', visible=0), Cell(value='7', visible=0), Cell(value='4', visible=0), Cell(value='2', visible=0), Cell(value='1', visible=0), Cell(value='8', visible=0), Cell(value='3', visible=0), Cell(value='6', visible=0), Cell(value='5', visible=0)]
         ,[Cell(value='3', visible=0), Cell(value='2', visible=0), Cell(value='6', visible=0), Cell(value='7', visible=0), Cell(value='9', visible=0), Cell(value='5', visible=0), Cell(value='4', visible=0), Cell(value='1', visible=1), Cell(value='8', visible=1)]
         ,[Cell(value='7', visible=1), Cell(value='8', visible=0), Cell(value='2', visible=0), Cell(value='9', visible=0), Cell(value='3', visible=0), Cell(value='4', visible=1), Cell(value='1', visible=1), Cell(value='5', visible=1), Cell(value='6', visible=0)]
-        ,[Cell(value='6', visible=0), Cell(value='1', visible=0), Cell(value='5', visible=0), Cell(value='1', visible=0), Cell(value='7', visible=0), Cell(value='2', visible=1), Cell(value='8', visible=0), Cell(value='9', visible=0), Cell(value='4', visible=0)]
+        ,[Cell(value='6', visible=0), Cell(value='3', visible=0), Cell(value='5', visible=0), Cell(value='1', visible=0), Cell(value='7', visible=0), Cell(value='2', visible=1), Cell(value='8', visible=0), Cell(value='9', visible=0), Cell(value='4', visible=0)]
         ,[Cell(value='4', visible=1), Cell(value='9', visible=1), Cell(value='1', visible=0), Cell(value='8', visible=0), Cell(value='5', visible=1), Cell(value='6', visible=0), Cell(value='7', visible=0), Cell(value='2', visible=0), Cell(value='3', visible=1)]
     ]
 
     b = Board()
 
-    print(b)
-    print(b.validate())
     b.board = board
     print(b.validate())
     print(b)
